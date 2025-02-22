@@ -200,7 +200,7 @@ const DashboardPage = () => {
       console.error("Invalid referral code:", userDetails.referralCode);
       return;
     }
-    const donationLink = `http://localhost:5173/donate?ref=${encodeURIComponent(
+    const donationLink = `https://dana-mitra.vercel.app/donate?ref=${encodeURIComponent(
       userDetails.referralCode
     )}`;
     navigator.clipboard.writeText(donationLink);
@@ -216,7 +216,7 @@ const DashboardPage = () => {
       console.error("Invalid referral code:", userDetails.referralCode);
       return;
     }
-    const donationLink = `http://localhost:5173/donate?ref=${encodeURIComponent(
+    const donationLink = `https://dana-mitra.vercel.app/donate?ref=${encodeURIComponent(
       userDetails.referralCode
     )}`;
     const message = `Support "${
@@ -241,7 +241,7 @@ const DashboardPage = () => {
       console.error("Invalid referral code:", userDetails.referralCode);
       return;
     }
-    const donationLink = `http://localhost:5173/donate?ref=${encodeURIComponent(
+    const donationLink = `https://dana-mitra.vercel.app/donate?ref=${encodeURIComponent(
       userDetails.referralCode
     )}`;
     const message = `Support "${"Our Campaigns"}" with NayePankh Foundation! ${"Help make a difference."} Goal: ₹${totalGoalAcrossCampaigns.toLocaleString()}, Raised: ₹${totalRaisedAcrossCampaigns.toLocaleString()}. Donate here: ${donationLink} using referral code ${
