@@ -8,7 +8,36 @@ import {
   Button,
   Link,
   Grid,
+  Container,
 } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import loginImage from "../assets/image2.png"; // Replace with your image path
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#FF9933", // Saffron
+    },
+    secondary: {
+      main: "#138808", // Green
+    },
+    background: {
+      default: "#FFF4E6", // Light saffron tint
+    },
+  },
+  typography: {
+    fontFamily: "'Poppins', sans-serif", // Modern font
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +59,7 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-      console.log(data.token)
+      console.log(data.token);
       if (response.ok) {
         localStorage.setItem("token", data.token);
         window.location.href = "/dashboard";
@@ -43,102 +72,159 @@ const Login = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh", // Updated to full height for consistency
-        display: "flex",
-        flexDirection: "column",
-        bgcolor: "background.default",
-      }}
-    >
-      {/* Main Content */}
+    <ThemeProvider theme={theme}>
       <Box
         sx={{
-          flexGrow: 1,
+          minHeight: "100vh",
+          bgcolor: "background.default",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          p: 4, // Increased padding for better spacing
+          p: { xs: 2, sm: 4 },
         }}
       >
-        <Card
-          sx={{
-            maxWidth: 450, // Matches Register page for modern feel
-            width: "100%",
-            boxShadow: "0px 6px 20px rgba(0,0,0,0.1)", // Softer shadow
-            borderRadius: 2, // Rounded corners
-          }}
-        >
-          <Box
+        <Container maxWidth="md">
+          <Card
             sx={{
-              p: 3, // Increased padding
-              textAlign: "center",
-              borderTopLeftRadius: "inherit",
-              borderTopRightRadius: "inherit",
-              bgcolor: "bisque", // Changed to bisque background
+              maxWidth: { xs: 400, sm: 800 }, // Wider on mobile and desktop
+              width: "100%",
+              boxShadow: "0px 8px 25px rgba(0,0,0,0.15)", // Enhanced shadow
+              borderRadius: 3, // More rounded corners
+              overflow: "hidden", // Ensure image doesn’t overflow
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" }, // Stack on mobile, side-by-side on desktop
             }}
           >
-            <Typography
-              variant="h4" // Larger for prominence, matches Register
-              sx={{ color: "blue", fontWeight: "bold", letterSpacing: 1 }} // Blue text
+            {/* Image Section (integrated within the card, slightly wider) */}
+            <Box
+              sx={{
+                flex: { md: 1.2 }, // Slightly wider (1.2 instead of 1) on desktop
+                backgroundImage: `url(${loginImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                minHeight: { xs: 150, sm: 400 }, // Taller on desktop, smaller on mobile
+                display: { xs: "none", md: "block" }, // Hide on mobile, show on desktop
+              }}
+            />
+            {/* Form Section */}
+            <Box
+              sx={{
+                flex: { md: 1 }, // Half width on desktop, adjusted for image width
+                p: { xs: 2, sm: 4 },
+              }}
             >
-              Login
-            </Typography>
-          </Box>
-          <CardContent sx={{ p: 4 }}> {/* Increased padding for content */}
-            <Box component="form" onSubmit={handleLogin}>
-              <Grid container spacing={3}> {/* Increased spacing */}
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Email"
-                    name="email"
-                    variant="outlined"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    type="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    name="password"
-                    variant="outlined"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    required
-                    type="password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    sx={{
-                      py: 1.5,
-                      fontSize: "1.1rem",
-                      fontWeight: "bold",
-                      "&:hover": { bgcolor: "#D32F2F" }, // Darker red on hover
-                    }}
-                  >
-                    Login
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sx={{ textAlign: "center" }}>
-                  <Link href="/register" variant="body2" sx={{ color: "primary.main" }}>
-                    New User? Register Now!
-                  </Link>
-                </Grid>
-              </Grid>
+              <Box
+                sx={{
+                  p: { xs: 2, sm: 3 },
+                  textAlign: "center",
+                  bgcolor: "primary.main", // Saffron header for modern look
+                  borderRadius:10,
+                }}
+              >
+                <Typography
+                  variant="body1" // Smaller text for "Sign In"
+                  sx={{
+                    color: "white",
+                    fontWeight: 600,
+                    letterSpacing: 0.5,
+                    textShadow: "1px 1px 2px rgba(0,0,0,0.2)", // Subtle shadow for depth
+                    fontSize: { xs: "1rem", sm: "1.6rem" },
+                    fontStyle: "italic", // Stylish touch
+                  }}
+                >
+                  Sign In
+                </Typography>
+              </Box>
+              <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
+                <Box component="form" onSubmit={handleLogin}>
+                  <Grid container spacing={{ xs: 2, sm: 3 }}>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Email"
+                        name="email"
+                        variant="outlined"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        type="email"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover fieldset": { borderColor: "primary.main" },
+                            "&.Mui-focused fieldset": { borderColor: "primary.main" },
+                          },
+                          "& .MuiInputLabel-root": {
+                            color: "primary.main",
+                            fontSize: { xs: "0.9rem", sm: "1rem" },
+                          },
+                          "& .MuiInputLabel-root.Mui-focused": { color: "primary.main" },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Password"
+                        name="password"
+                        variant="outlined"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        required
+                        type="password"
+                        sx={{
+                          "& .MuiOutlinedInput-root": {
+                            "&:hover fieldset": { borderColor: "primary.main" },
+                            "&.Mui-focused fieldset": { borderColor: "primary.main" },
+                          },
+                          "& .MuiInputLabel-root": {
+                            color: "primary.main",
+                            fontSize: { xs: "0.9rem", sm: "1rem" },
+                          },
+                          "& .MuiInputLabel-root.Mui-focused": { color: "primary.main" },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        sx={{
+                          py: { xs: 1, sm: 1.5 },
+                          fontSize: { xs: "1rem", sm: "1.2rem" },
+                          fontWeight: 700,
+                          borderRadius: 2,
+                          bgcolor: "secondary.main", // Green for a unique touch
+                          "&:hover": { bgcolor: "secondary.dark" },
+                          boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                          transition: "all 0.3s ease",
+                          color:"white",
+                        }}
+                      >
+                        Sign In
+                      </Button>
+                    </Grid>
+                    <Grid item xs={12} sx={{ textAlign: "center" }}>
+                      <Link
+                        href="/register"
+                        variant="body2"
+                        sx={{
+                          color: "primary.main",
+                          fontSize: { xs: "0.8rem", sm: "1rem" },
+                        }}
+                      >
+                        New User? Register Now!
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </CardContent>
             </Box>
-          </CardContent>
-        </Card>
+          </Card>
+        </Container>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 };
 

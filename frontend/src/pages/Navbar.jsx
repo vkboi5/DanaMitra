@@ -10,6 +10,7 @@ import {
   ListItem,
   Box,
   Divider,
+  Link, // Import Link for navigation
 } from "@mui/material";
 import { Menu as MenuIcon, VolunteerActivism as VolunteerActivismIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -46,6 +47,9 @@ export default function Navbar() {
     }, 100); // Small delay to ensure page loads
   };
 
+  const handleDanaMitraClick = () => {
+    navigate("/"); // Navigate to homepage when DanaMitra is clicked
+  };
 
   const navLinks = [
     { text: "Home", path: "/", sectionId: "home" },
@@ -56,7 +60,7 @@ export default function Navbar() {
   ];
 
   return (
-  <>
+    <>
       <AppBar
         position="static"
         sx={{
@@ -65,20 +69,46 @@ export default function Navbar() {
           boxShadow: "0px 4px 15px rgba(0,0,0,0.15)",
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between", py: 2, px: { xs: 2, md: 4 } }}>
-            <Typography
-              variant="h2"
-              component="h1"
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            py: 2,
+            px: { xs: 2, md: 4 },
+            alignItems: "center", // Ensure vertical alignment in mobile view
+          }}
+        >
+          {/* DanaMitra as a Link, aligned with toggle button in mobile */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center", // Align vertically with toggle button
+              flexGrow: 1, // Allow text to grow and center on mobile
+            }}
+          >
+            <Link
+              onClick={handleDanaMitraClick}
               sx={{
-                color: "orange",
-                fontWeight: 800,
-                textAlign: "center",
-                mb: 2,
-                fontSize: { xs: "1.0rem", md: "2.0rem" },
+                textDecoration: "none",
               }}
             >
-              DanaMitra
-            </Typography>
+              <Typography
+                variant="h2"
+                component="h1"
+                sx={{
+                  color: "orange",
+                  fontWeight: 800,
+                  textAlign: "center",
+                  mb: 0, // Remove margin for better alignment
+                  fontSize: { xs: "1.0rem", md: "2.0rem" },
+                  cursor: "pointer", // Indicate clickable
+                  transition: "color 0.3s ease", // Smooth color transition on hover
+                }}
+              >
+                DanaMitra
+              </Typography>
+            </Link>
+          </Box>
 
           <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
             {navLinks.map((link) => (
@@ -125,7 +155,7 @@ export default function Navbar() {
                   py: 1,
                   px: 3,
                   "&:hover": {
-                    color:"white",
+                    color: "white",
                     bgcolor: orange[600],
                     borderColor: "white",
                     transform: "scale(1.05)",
@@ -137,22 +167,23 @@ export default function Navbar() {
               </Button>
             ) : (
               <Button
-                variant="contained"
+                variant="outlined" // Changed to outlined to match Logout styling
                 onClick={handleLogin}
                 sx={{
-                  bgcolor: "secondary.main",
-                  color: "white",
+                  color: "orange",
+                  borderColor: orange[700],
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   borderRadius: 50,
                   py: 1,
                   px: 3,
                   "&:hover": {
-                    bgcolor: "secondary.dark",
+                    color: "white",
+                    bgcolor: orange[600],
+                    borderColor: "white",
                     transform: "scale(1.05)",
                   },
                   transition: "all 0.3s ease",
-                  boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
                 }}
               >
                 Login
@@ -164,7 +195,7 @@ export default function Navbar() {
             edge="end"
             aria-label="Open menu"
             onClick={toggleDrawer(true)}
-            sx={{ display: { xs: "flex", md: "none" }, color: "white" }}
+            sx={{ display: { xs: "flex", md: "none" }, color: orange[600] }}
           >
             <MenuIcon />
           </IconButton>
@@ -270,18 +301,22 @@ export default function Navbar() {
                 </Button>
               ) : (
                 <Button
-                  variant="contained"
+                  variant="outlined" // Changed to outlined to match Logout styling
                   onClick={handleLogin}
                   fullWidth
                   sx={{
                     m: 2,
-                    bgcolor: "secondary.main",
-                    color: "white",
+                    color: "orange",
+                    borderColor: orange[700],
                     textTransform: "uppercase",
                     fontWeight: "bold",
                     borderRadius: 2,
                     py: 1.5,
-                    "&:hover": { bgcolor: "secondary.dark" },
+                    "&:hover": {
+                      color: "white",
+                      bgcolor: orange[600],
+                      borderColor: "white",
+                    },
                   }}
                 >
                   Login
