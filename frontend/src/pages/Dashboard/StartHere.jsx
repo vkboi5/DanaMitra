@@ -91,7 +91,7 @@ const CreateCampaign = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/campaign", {
+      const response = await fetch("https://dana-mitra-zehy.vercel.app/api/campaign", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
