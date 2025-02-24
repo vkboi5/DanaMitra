@@ -10,11 +10,14 @@ import {
   ListItem,
   Box,
   Divider,
-  Link, // Import Link for navigation
+  Link,
 } from "@mui/material";
-import { Menu as MenuIcon, VolunteerActivism as VolunteerActivismIcon } from "@mui/icons-material";
+import {
+  Menu as MenuIcon,
+  VolunteerActivism as VolunteerActivismIcon,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { orange } from "@mui/material/colors";
+import mainLogo from "../assets/main-logo.png";
 
 export default function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -24,7 +27,10 @@ export default function Navbar() {
   const isLoggedIn = !!token;
 
   const toggleDrawer = (open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setDrawerOpen(open);
@@ -37,26 +43,20 @@ export default function Navbar() {
     navigate("/");
   };
 
-  const handleNavClick = (sectionId) => {
-    navigate("/"); // Navigate to homepage first
-    setTimeout(() => {
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100); // Small delay to ensure page loads
+  const handleNavClick = (path) => {
+    navigate(path);
   };
 
-  const handleDanaMitraClick = () => {
-    navigate("/"); // Navigate to homepage when DanaMitra is clicked
+  const handleNayePankhClick = () => {
+    navigate("/");
   };
 
   const navLinks = [
-    { text: "Home", path: "/", sectionId: "home" },
-    { text: "About", path: "/", sectionId: "about" },
-    { text: "Campaigns", path: "/", sectionId: "campaigns" },
-    { text: "How It Works", path: "/", sectionId: "how-it-works" },
-    { text: "Contact", path: "/", sectionId: "contact" },
+    { text: "Home", path: "/" },
+    { text: "About", path: "/about" },
+    { text: "Certificates", path: "/certificates" },
+    { text: "Newspaper", path: "/newspaper" },
+    { text: "Donate", path: "/donate" }, // Fixed path from "/donation" to match previous consistency
   ];
 
   return (
@@ -64,9 +64,9 @@ export default function Navbar() {
       <AppBar
         position="static"
         sx={{
-          bgcolor: "#fff4e6",
-          color: "white",
-          boxShadow: "0px 4px 15px rgba(0,0,0,0.15)",
+          bgcolor: "#FFFFFF", // Clean white background
+          color: "#34495E", // Dark slate for text
+          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)", // Softer shadow for depth
         }}
       >
         <Toolbar
@@ -75,54 +75,72 @@ export default function Navbar() {
             justifyContent: "space-between",
             py: 2,
             px: { xs: 2, md: 4 },
-            alignItems: "center", // Ensure vertical alignment in mobile view
+            alignItems: "center",
           }}
         >
-          {/* DanaMitra as a Link, aligned with toggle button in mobile */}
           <Box
             sx={{
               display: "flex",
-              alignItems: "center", // Align vertically with toggle button
-              flexGrow: 1, // Allow text to grow and center on mobile
+              alignItems: "center",
+              flexGrow: 1,
             }}
           >
             <Link
-              onClick={handleDanaMitraClick}
+              onClick={handleNayePankhClick}
               sx={{
                 textDecoration: "none",
+                display: "flex",
+                alignItems: "center",
               }}
             >
+              <img
+                src={mainLogo}
+                alt="NayePankh Logo"
+                style={{
+                  height: "50px",
+                  marginRight: "12px", // Slightly more spacing
+                }}
+              />
               <Typography
                 variant="h2"
                 component="h1"
                 sx={{
-                  color: "orange",
+                  color: "#2ECC71", // Green for the title
                   fontWeight: 800,
                   textAlign: "center",
-                  mb: 0, // Remove margin for better alignment
-                  fontSize: { xs: "1.0rem", md: "2.0rem" },
-                  cursor: "pointer", // Indicate clickable
-                  transition: "color 0.3s ease", // Smooth color transition on hover
+                  mb: 0,
+                  fontSize: { xs: "1.2rem", md: "2.2rem" }, // Slightly larger for impact
+                  cursor: "pointer",
+                  transition: "color 0.3s ease",
+                  "&:hover": {
+                    color: "#27AE60", // Darker green on hover
+                  },
                 }}
               >
-                DanaMitra
+                NayePankh
               </Typography>
             </Link>
           </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              gap: 3,
+              alignItems: "center",
+            }}
+          >
             {navLinks.map((link) => (
               <Button
                 key={link.text}
-                onClick={() => handleNavClick(link.sectionId)}
+                onClick={() => handleNavClick(link.path)}
                 sx={{
-                  color: "orange",
+                  color: "#34495E", // Dark slate for nav items
                   textTransform: "uppercase",
-                  fontWeight: 550,
+                  fontWeight: 600,
                   fontSize: "1rem",
                   position: "relative",
                   "&:hover": {
-                    color: orange[900],
+                    color: "#2ECC71", // Green on hover
                     "&::after": {
                       width: "100%",
                     },
@@ -132,9 +150,9 @@ export default function Navbar() {
                     position: "absolute",
                     width: "0",
                     height: "2px",
-                    bottom: "-4px",
+                    bottom: "-6px",
                     left: 0,
-                    bgcolor: orange[900],
+                    bgcolor: "#2ECC71", // Green underline
                     transition: "width 0.3s ease",
                   },
                 }}
@@ -147,17 +165,17 @@ export default function Navbar() {
                 variant="outlined"
                 onClick={handleLogout}
                 sx={{
-                  color: "orange",
-                  borderColor: orange[700],
+                  color: "#F1C40F", // Yellow text
+                  borderColor: "#F1C40F",
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   borderRadius: 50,
                   py: 1,
                   px: 3,
                   "&:hover": {
-                    color: "white",
-                    bgcolor: orange[600],
-                    borderColor: "white",
+                    color: "#FFFFFF",
+                    bgcolor: "#F1C40F", // Yellow background on hover
+                    borderColor: "#F1C40F",
                     transform: "scale(1.05)",
                   },
                   transition: "all 0.3s ease",
@@ -167,20 +185,18 @@ export default function Navbar() {
               </Button>
             ) : (
               <Button
-                variant="outlined" // Changed to outlined to match Logout styling
+                variant="contained"
                 onClick={handleLogin}
                 sx={{
-                  color: "orange",
-                  borderColor: orange[700],
+                  bgcolor: "#F1C40F", // Yellow background
+                  color: "#34495E", // Dark slate text
                   textTransform: "uppercase",
                   fontWeight: "bold",
                   borderRadius: 50,
                   py: 1,
                   px: 3,
                   "&:hover": {
-                    color: "white",
-                    bgcolor: orange[600],
-                    borderColor: "white",
+                    bgcolor: "#F39C12", // Darker yellow on hover
                     transform: "scale(1.05)",
                   },
                   transition: "all 0.3s ease",
@@ -195,7 +211,10 @@ export default function Navbar() {
             edge="end"
             aria-label="Open menu"
             onClick={toggleDrawer(true)}
-            sx={{ display: { xs: "flex", md: "none" }, color: orange[600] }}
+            sx={{
+              display: { xs: "flex", md: "none" },
+              color: "#2ECC71", // Green for menu icon
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -206,7 +225,7 @@ export default function Navbar() {
         <Box
           sx={{
             width: 280,
-            bgcolor: "background.default",
+            bgcolor: "#FFFFFF", // White background
             height: "100%",
             boxShadow: "-2px 0px 10px rgba(0,0,0,0.1)",
           }}
@@ -217,36 +236,48 @@ export default function Navbar() {
           <Box
             sx={{
               p: 3,
-              bgcolor: "primary.main",
+              bgcolor: "#2ECC71", // Green header
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               borderBottom: "1px solid rgba(255,255,255,0.2)",
             }}
           >
+            <img
+              src={mainLogo}
+              alt="NayePankh Logo"
+              style={{
+                height: "45px",
+                marginRight: "12px",
+              }}
+            />
             <Typography
               variant="h6"
-              sx={{ fontWeight: 700, color: "white", textTransform: "uppercase" }}
+              sx={{
+                fontWeight: 700,
+                color: "#FFFFFF", // White text on green
+                textTransform: "uppercase",
+              }}
             >
-              DanaMitra
+              NayePankh
             </Typography>
           </Box>
           <List sx={{ py: 2 }}>
             {navLinks.map((link) => (
               <ListItem key={link.text} disablePadding>
                 <Button
-                  onClick={() => handleNavClick(link.sectionId)}
+                  onClick={() => handleNavClick(link.path)}
                   sx={{
                     width: "100%",
                     justifyContent: "flex-start",
                     textTransform: "uppercase",
-                    color: "primary.main",
+                    color: "#34495E", // Dark slate
                     fontWeight: 500,
                     py: 1.5,
                     px: 3,
                     "&:hover": {
-                      bgcolor: "rgba(255,153,51,0.1)",
-                      color: "primary.dark",
+                      bgcolor: "rgba(46, 204, 113, 0.1)", // Light green hover
+                      color: "#2ECC71", // Green text
                     },
                     transition: "all 0.3s ease",
                   }}
@@ -256,22 +287,25 @@ export default function Navbar() {
               </ListItem>
             ))}
           </List>
-          <Divider sx={{ borderColor: "rgba(255,153,51,0.2)" }} />
+          <Divider sx={{ borderColor: "rgba(46, 204, 113, 0.2)" }} />
           <List>
             <ListItem disablePadding>
               <Button
                 variant="contained"
                 startIcon={<VolunteerActivismIcon />}
+                onClick={() => handleNavClick("/donate")}
                 fullWidth
                 sx={{
                   m: 2,
-                  bgcolor: "primary.main",
-                  color: "white",
+                  bgcolor: "#F1C40F", // Yellow button
+                  color: "#34495E", // Dark slate text
                   textTransform: "uppercase",
                   fontWeight: "bold",
-                  borderRadius: 2,
+                  borderRadius: 4,
                   py: 1.5,
-                  "&:hover": { bgcolor: "primary.dark" },
+                  "&:hover": {
+                    bgcolor: "#F39C12", // Darker yellow
+                  },
                 }}
               >
                 Donate Now
@@ -285,15 +319,15 @@ export default function Navbar() {
                   fullWidth
                   sx={{
                     m: 2,
-                    color: "primary.main",
-                    borderColor: "primary.main",
+                    color: "#2ECC71", // Green text
+                    borderColor: "#2ECC71",
                     textTransform: "uppercase",
                     fontWeight: "bold",
-                    borderRadius: 2,
+                    borderRadius: 4,
                     py: 1.5,
                     "&:hover": {
-                      bgcolor: "rgba(255,153,51,0.1)",
-                      borderColor: "primary.dark",
+                      bgcolor: "rgba(46, 204, 113, 0.1)",
+                      borderColor: "#27AE60", // Darker green
                     },
                   }}
                 >
@@ -301,21 +335,20 @@ export default function Navbar() {
                 </Button>
               ) : (
                 <Button
-                  variant="outlined" // Changed to outlined to match Logout styling
+                  variant="outlined"
                   onClick={handleLogin}
                   fullWidth
                   sx={{
                     m: 2,
-                    color: "orange",
-                    borderColor: orange[700],
+                    color: "#2ECC71", // Green text
+                    borderColor: "#2ECC71",
                     textTransform: "uppercase",
                     fontWeight: "bold",
-                    borderRadius: 2,
+                    borderRadius: 4,
                     py: 1.5,
                     "&:hover": {
-                      color: "white",
-                      bgcolor: orange[600],
-                      borderColor: "white",
+                      bgcolor: "rgba(46, 204, 113, 0.1)",
+                      borderColor: "#27AE60",
                     },
                   }}
                 >

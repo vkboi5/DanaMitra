@@ -8,19 +8,10 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Link,
-  IconButton,
   Snackbar,
   Alert,
 } from "@mui/material";
 import {
-  Group as GroupIcon,
-  PersonAdd as PersonAddIcon,
-  Favorite as FavoriteIcon,
-  Share as ShareIcon,
-  BarChart as BarChartIcon,
-  Facebook as FacebookIcon,
-  Twitter as TwitterIcon,
   Star as StarIcon,
   VolunteerActivismOutlined,
 } from "@mui/icons-material";
@@ -29,41 +20,59 @@ import { useNavigate } from "react-router-dom";
 import img1 from "../assets/image1.png";
 import img2 from "../assets/image2.png";
 import img3 from "../assets/image3.png";
+import aboutImg from "../assets/image.png";
+import helpBg from "../assets/welcome-img.webp";
 import fimg1 from "../assets/eduForAll.png";
 import fimg2 from "../assets/cleanWater.png";
 import fimg3 from "../assets/orphanages.png";
-// Custom theme with Indian cultural colors
+import Footer from "./Footer";
+import logoImg1 from "../assets/loop-img-1.jpg";
+import logoImg2 from "../assets/loop-img-2.jpg";
+import logoImg3 from "../assets/loop-img-3.jpg";
+
+// Updated theme to match Navbar
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#FF9933", // Saffron
+      main: "#2ECC71", // Emerald Green
     },
     secondary: {
-      main: "#138808", // Green
+      main: "#F1C40F", // Sunflower Yellow
     },
     background: {
-      default: "#FFF4E6", // Light saffron tint for warmth
+      default: "#FFFFFF", // Clean white
+    },
+    text: {
+      primary: "#34495E", // Dark Slate
     },
   },
   typography: {
-    fontFamily: "'Poppins', sans-serif", // Modern font
+    fontFamily: "'Poppins', sans-serif",
   },
 });
 
-const carouselImages = [
-  img1, // Replace with actual paths
-  img2,
-  img3,
-];
+// Carousel images array
+const carouselImages = [img1, img2, img3];
+const carouselLoopImages = [logoImg1, logoImg2, logoImg3];
 
-export default function App() {
+export default function Home() {
   const [copied, setCopied] = useState(false);
   const [carouselIndex, setCarouselIndex] = useState(0);
+  const [carouselIndexLoop, setCarouselIndexLoop] = useState(0);
   const navigate = useNavigate();
-  // Carousel auto-rotation
+
+  // Carousel effect
   useEffect(() => {
     const interval = setInterval(() => {
       setCarouselIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 3000); // Change every 3 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  // Carousel Loop effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselIndexLoop((prev) => (prev + 1) % carouselLoopImages.length);
     }, 3000); // Change every 3 seconds
     return () => clearInterval(interval);
   }, []);
@@ -72,8 +81,8 @@ export default function App() {
     setCopied(false);
   };
 
-  const handleBtn = () => {
-    navigate("/login");
+  const handleDonateBtn = () => {
+    navigate("/donate");
   };
 
   return (
@@ -84,11 +93,29 @@ export default function App() {
           display: "flex",
           flexDirection: "column",
           bgcolor: "background.default",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        {/* Hero Section */}
+        {/* Artistic Background */}
         <Box
-          id="home" // Section ID for "Home"
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: `
+              radial-gradient(circle at 20% 30%, rgba(46, 204, 113, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(241, 196, 15, 0.15) 0%, transparent 50%)
+            `,
+            zIndex: 0,
+          }}
+        />
+
+        {/* Hero Section with Carousel */}
+        <Box
+          id="home"
           sx={{
             position: "relative",
             height: "80vh",
@@ -96,6 +123,7 @@ export default function App() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             transition: "background-image 1s ease-in-out",
+            zIndex: 1,
           }}
         >
           <Box
@@ -106,14 +134,14 @@ export default function App() {
               right: 0,
               bottom: 0,
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.4))",
+                "linear-gradient(to bottom, rgba(52, 73, 94, 0.7), rgba(52, 73, 94, 0.3))",
             }}
           />
           <Container
             maxWidth="md"
             sx={{
               position: "relative",
-              zIndex: 1,
+              zIndex: "2",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -125,48 +153,49 @@ export default function App() {
               variant="h2"
               component="h1"
               sx={{
-                color: "white",
+                color: "#FFFFFF",
                 fontWeight: 800,
                 textAlign: "center",
                 mb: 2,
                 fontSize: { xs: "2.5rem", md: "4.5rem" },
-                textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+                textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
               }}
             >
-              DanaMitra
+              NayePankh
             </Typography>
             <Typography
               variant="h5"
               component="p"
               sx={{
-                color: "white",
+                color: "#E8F5E9",
                 textAlign: "center",
                 mb: 4,
                 fontSize: { xs: "1.25rem", md: "1.75rem" },
                 fontWeight: 300,
                 maxWidth: "700px",
+                textShadow: "1px 1px 4px rgba(0,0,0,0.3)",
               }}
             >
-              Empowering Generosity, Inspiring Change.
+              Giving Wings to Uplift Lives
             </Typography>
             <Button
               variant="contained"
-              onClick={handleBtn}
+              onClick={handleDonateBtn}
               startIcon={<VolunteerActivismOutlined />}
               sx={{
-                bgcolor: "white",
-                color: "primary.main",
+                bgcolor: "#F1C40F",
+                color: "#34495E",
                 textTransform: "uppercase",
                 fontWeight: "bold",
                 borderRadius: 50,
-                py: 1,
-                px: 3,
+                py: 1.5,
+                px: 4,
                 "&:hover": {
-                  bgcolor: "#F5F5F5",
+                  bgcolor: "#F39C12",
                   transform: "scale(1.05)",
                 },
                 transition: "all 0.3s ease",
-                boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+                boxShadow: "0px 6px 20px rgba(0,0,0,0.25)",
               }}
             >
               Donate Now
@@ -175,45 +204,187 @@ export default function App() {
         </Box>
 
         {/* About Us Section */}
-        <Box id="about" sx={{ py: 10 }}>
-          <Container maxWidth="md">
+        <Box id="about" sx={{ py: 14, position: "relative", zIndex: 1 }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={6} alignItems="center">
+              {/* Text first on mobile */}
+              <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
+                <Box
+                  sx={{
+                    pl: { xs: 0, md: 4 },
+                    textAlign: { xs: "center", md: "left" },
+                  }}
+                >
+                  <Typography
+                    variant="h3"
+                    component="h2"
+                    sx={{
+                      fontWeight: 700,
+                      color: "primary.main",
+                      mb: 2,
+                      fontSize: { xs: "1.75rem", md: "2.5rem" },
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    About Us
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    component="h3"
+                    sx={{
+                      fontWeight: 500,
+                      color: "text.secondary",
+                      mb: 2,
+                      fontSize: { xs: "1.5rem", md: "2rem" },
+                      fontStyle: "italic",
+                    }}
+                  >
+                    Think global, Act local.
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: { xs: "1.1rem", md: "1.25rem" },
+                      lineHeight: 1.8,
+                      color: "text.primary",
+                      maxWidth: "600px",
+                      mx: { xs: "auto", md: 0 },
+                    }}
+                  >
+                    "NayePankh Foundation" is a non governmental organisation
+                    with a strong desire to help the society and make it a
+                    better place for all, by doing everything in our power and
+                    to make our vision successful we would require your vital
+                    support. Service to mankind is the service to god. Let’s
+                    revolutionise the society together!
+                  </Typography>
+                </Box>
+              </Grid>
+              {/* Image second on mobile */}
+              <Grid item xs={12} md={4} order={{ xs: 2, md: 1 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <img
+                    src={aboutImg}
+                    alt="About NayePankh"
+                    style={{
+                      width: "600px",
+                      height: "500px",
+                      borderRadius: "10%",
+                      border: "8px solid #FFFFFF",
+                      boxShadow: "0px 6px 20px rgba(0,0,0,0.2)",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* How You Can Help Section with Background */}
+        <Box
+          id="how-it-works"
+          sx={{
+            py: 14,
+            position: "relative",
+            zIndex: 1,
+            backgroundImage: `url(${helpBg})`,
+            backgroundSize: "cover",
+            filter: "brightness(0.7)",
+            backgroundPosition: "center",
+            minHeight: "416px",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.02)",
+              filter: "brightness(1.1)", // Hover effects without blur
+            },
+          }}
+        >
+          <Container
+            maxWidth="md"
+            sx={{ position: "relative", zIndex: 2, textAlign: "center" }}
+          >
             <Typography
               variant="h3"
               component="h2"
               sx={{
-                textAlign: "center",
-                mb: 5,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "primary.main",
+                color: "#F1C40F", // Yellow for vibrancy and contrast
                 fontWeight: 700,
+                mb: 4,
+                fontSize: { xs: "2rem", md: "3rem" },
+                letterSpacing: "1px",
+                textShadow: "2px 2px 8px rgba(0,0,0,0.5)", // Shadow for readability
               }}
             >
-              <GroupIcon sx={{ mr: 1, fontSize: 40 }} />
-              About Us
+              It’s that easy to bring a{" "}
+              <span style={{ color: "#FFFFFF" }}>Smile</span> on Their Faces
             </Typography>
+            <Button
+              variant="contained"
+              onClick={handleDonateBtn}
+              startIcon={<VolunteerActivismOutlined />}
+              sx={{
+                bgcolor: "#F1C40F",
+                color: "#34495E",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+                borderRadius: 50,
+                py: 1.5,
+                px: 5,
+                mb: 4,
+                "&:hover": {
+                  bgcolor: "#F39C12",
+                  transform: "scale(1.05)",
+                },
+                transition: "all 0.3s ease",
+                boxShadow: "0px 6px 20px rgba(0,0,0,0.25)",
+                fontSize: { xs: "1rem", md: "1.25rem" },
+              }}
+            >
+              Donate Now
+            </Button>
             <Typography
               variant="body1"
               sx={{
-                textAlign: "center",
-                fontSize: "1.2rem",
+                bgcolor: "transparent",
+                color: "#FFFFFF", // White base color
+                fontSize: { xs: "1.2rem", md: "1.5rem" },
                 lineHeight: 1.8,
-                color: "text.secondary",
                 maxWidth: "800px",
+                fontWeight: 700,
                 mx: "auto",
+                textShadow: "1px 1px 4px rgba(0,0,0,0.5)", // Shadow for readability
               }}
             >
-              At DanaMitra, every act of generosity creates a ripple of hope.
-              Our platform connects you with meaningful causes, empowering you
-              to support, share, and witness the impact of your donations in
-              real-time.
+              We don’t ask for much, just{" "}
+              <span style={{ color: "#F1C40F" }}>help us</span> with what you{" "}
+              <span style={{ color: "#2ECC71" }}>can</span>—Be it{" "}
+              <span style={{ color: "#2ECC71" }}>Money</span>,{" "}
+              <span style={{ color: "#2ECC71" }}>Skill</span> or Your{" "}
+              <span style={{ color: "#2ECC71" }}>Time</span>.
             </Typography>
           </Container>
         </Box>
 
-        {/* How It Works Section */}
-        <Box id="how-it-works" sx={{ py: 10, bgcolor: "#F9F9F9" }}>
+        <Box
+          sx={{
+            position: "relative",
+            height: { xs: "120px", lg: "416px" }, // Reduced height for mobile, full height for desktop
+            width: "100%", // Ensures full width to prevent horizontal cut
+            backgroundImage: `url(${carouselLoopImages[carouselIndexLoop]})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            transition: "background-image 1s ease-in-out", // Smooth transition
+          }}
+        />
+
+        {/* Impact/Featured Campaigns Section */}
+        <Box id="campaigns" sx={{ py: 14, position: "relative", zIndex: 1 }}>
           <Container maxWidth="lg">
             <Typography
               variant="h3"
@@ -223,105 +394,17 @@ export default function App() {
                 mb: 6,
                 color: "primary.main",
                 fontWeight: 700,
-              }}
-            >
-              How It Works
-            </Typography>
-            <Grid container spacing={4} justifyContent="center">
-              {[
-                {
-                  icon: <PersonAddIcon />,
-                  title: "Sign Up",
-                  desc: "Create your profile to start making a difference.",
-                },
-                {
-                  icon: <FavoriteIcon />,
-                  title: "Donate",
-                  desc: "Choose a cause and contribute securely.",
-                },
-                {
-                  icon: <ShareIcon />,
-                  title: "Share",
-                  desc: "Spread the word with your referral code.",
-                },
-                {
-                  icon: <BarChartIcon />,
-                  title: "Track Impact",
-                  desc: "See the real-time impact of your generosity.",
-                },
-              ].map((item, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-                  <Card
-                    sx={{
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                      "&:hover": {
-                        transform: "translateY(-10px)",
-                        boxShadow: "0px 10px 20px rgba(0,0,0,0.15)",
-                      },
-                      borderRadius: 3,
-                      bgcolor: "white",
-                    }}
-                  >
-                    <CardContent sx={{ textAlign: "center", p: 3 }}>
-                      <Box
-                        sx={{
-                          bgcolor: "primary.light",
-                          borderRadius: "50%",
-                          width: 60,
-                          height: 60,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          mx: "auto",
-                          mb: 2,
-                        }}
-                      >
-                        {React.cloneElement(item.icon, {
-                          sx: { fontSize: 30, color: "primary.main" },
-                        })}
-                      </Box>
-                      <Typography
-                        variant="h6"
-                        gutterBottom
-                        sx={{ fontWeight: 600 }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {item.desc}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Container>
-        </Box>
-
-        {/* Impact/Featured Campaigns Section */}
-        <Box id="campaigns" sx={{ py: 10 }}>
-          <Container maxWidth="lg">
-            <Typography
-              variant="h3"
-              component="h2"
-              sx={{
-                textAlign: "center",
-                mb: 5,
-                color: "primary.main",
-                fontWeight: 700,
+                fontSize: { xs: "2rem", md: "3rem" },
+                letterSpacing: "1px",
               }}
             >
               Our Impact
             </Typography>
             <Grid container spacing={6} justifyContent="center" sx={{ mb: 8 }}>
               {[
-                { value: "₹1,250,000", label: "Raised" },
-                { value: "500", label: "Campaigns Funded" },
-                { value: "10,000", label: "Donors" },
+                { value: "200,000+", label: "Lives Touched" },
+                { value: "Multiple", label: "Cities Reached" },
+                { value: "Youth-Led", label: "Initiative" },
               ].map((stat, index) => (
                 <Grid item xs={12} sm={4} key={index}>
                   <Typography
@@ -330,13 +413,18 @@ export default function App() {
                       textAlign: "center",
                       fontWeight: 700,
                       color: "secondary.main",
+                      fontSize: { xs: "1.75rem", md: "2.25rem" },
                     }}
                   >
                     {stat.value}
                   </Typography>
                   <Typography
                     variant="body1"
-                    sx={{ textAlign: "center", color: "text.secondary" }}
+                    sx={{
+                      textAlign: "center",
+                      color: "text.secondary",
+                      fontSize: { xs: "1rem", md: "1.25rem" },
+                    }}
                   >
                     {stat.label}
                   </Typography>
@@ -349,28 +437,29 @@ export default function App() {
               component="h3"
               sx={{
                 textAlign: "center",
-                mb: 5,
+                mb: 6,
                 color: "primary.main",
                 fontWeight: 700,
+                fontSize: { xs: "1.75rem", md: "2.5rem" },
               }}
             >
-              Featured Campaigns
+              Our Initiatives
             </Typography>
             <Grid container spacing={4}>
               {[
                 {
-                  title: "Education for All",
-                  desc: "Supporting education for underprivileged children.",
+                  title: "Education Support",
+                  desc: "Empowering children with learning opportunities.",
                   img: fimg1,
                 },
                 {
-                  title: "Clean Water Initiative",
-                  desc: "Providing safe drinking water to rural communities.",
+                  title: "Hygiene Awareness",
+                  desc: "Providing sanitary napkins and education.",
                   img: fimg2,
                 },
                 {
-                  title: "Healthcare Access",
-                  desc: "Ensuring medical care for the underserved.",
+                  title: "Food Distribution",
+                  desc: "Feeding the underprivileged and strays.",
                   img: fimg3,
                 },
               ].map((campaign, index) => (
@@ -380,9 +469,11 @@ export default function App() {
                       transition: "transform 0.3s ease, box-shadow 0.3s ease",
                       "&:hover": {
                         transform: "translateY(-10px)",
-                        boxShadow: "0px 10px 20px rgba(0,0,0,0.15)",
+                        boxShadow: "0px 12px 30px rgba(0,0,0,0.2)",
                       },
-                      borderRadius: 3,
+                      borderRadius: 6,
+                      bgcolor: "#FFFFFF",
+                      overflow: "hidden",
                     }}
                   >
                     <CardMedia
@@ -390,13 +481,24 @@ export default function App() {
                       height="180"
                       image={campaign.img}
                       alt={campaign.title}
-                      sx={{ borderTopLeftRadius: 3, borderTopRightRadius: 3 }}
+                      sx={{ borderTopLeftRadius: 6, borderTopRightRadius: 6 }}
                     />
                     <CardContent>
-                      <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontWeight: 600,
+                          color: "text.primary",
+                          fontSize: { xs: "1.1rem", md: "1.25rem" },
+                        }}
+                      >
                         {campaign.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
+                      >
                         {campaign.desc}
                       </Typography>
                     </CardContent>
@@ -408,7 +510,9 @@ export default function App() {
         </Box>
 
         {/* Testimonials Section */}
-        <Box sx={{ py: 10, bgcolor: "#F9F9F9" }}>
+        <Box
+          sx={{ py: 14, bgcolor: "#F7F9FC", position: "relative", zIndex: 1 }}
+        >
           <Container maxWidth="lg">
             <Typography
               variant="h3"
@@ -418,23 +522,24 @@ export default function App() {
                 mb: 6,
                 color: "primary.main",
                 fontWeight: 700,
+                fontSize: { xs: "2rem", md: "3rem" },
+                letterSpacing: "1px",
               }}
             >
-              What Our Donors Say
+              Voices of Support
             </Typography>
             <Grid container spacing={4}>
               {[
                 {
-                  quote:
-                    "DanaMitra makes giving so easy . I love seeing my impact!",
+                  quote: "NayePankh’s impact on education is inspiring!",
                   name: "Priya S.",
                 },
                 {
-                  quote: "A fantastic platform to support causes I care about!",
+                  quote: "A youth-led movement that truly cares!",
                   name: "Rahul M.",
                 },
                 {
-                  quote: "The transparency and ease of use are unmatched!",
+                  quote: "Making a difference, one step at a time.",
                   name: "Anita K.",
                 },
               ].map((testimonial, index) => (
@@ -442,9 +547,9 @@ export default function App() {
                   <Card
                     sx={{
                       p: 3,
-                      borderRadius: 3,
-                      bgcolor: "white",
-                      boxShadow: "0px 5px 15px rgba(0,0,0,0.1)",
+                      borderRadius: 6,
+                      bgcolor: "#FFFFFF",
+                      boxShadow: "0px 6px 20px rgba(0,0,0,0.15)",
                       transition: "transform 0.3s ease",
                       "&:hover": { transform: "scale(1.03)" },
                     }}
@@ -460,7 +565,7 @@ export default function App() {
                         {[...Array(5)].map((_, i) => (
                           <StarIcon
                             key={i}
-                            sx={{ color: "#FFD700", fontSize: 24 }}
+                            sx={{ color: "#F1C40F", fontSize: 26 }}
                           />
                         ))}
                       </Box>
@@ -471,13 +576,19 @@ export default function App() {
                           mb: 2,
                           textAlign: "center",
                           color: "text.secondary",
+                          fontSize: { xs: "1rem", md: "1.1rem" },
                         }}
                       >
-                        &quot;{testimonial.quote}&quot;
+                        "{testimonial.quote}"
                       </Typography>
                       <Typography
                         variant="subtitle1"
-                        sx={{ textAlign: "center", fontWeight: 600 }}
+                        sx={{
+                          textAlign: "center",
+                          fontWeight: 600,
+                          color: "text.primary",
+                          fontSize: { xs: "1rem", md: "1.1rem" },
+                        }}
                       >
                         - {testimonial.name}
                       </Typography>
@@ -490,45 +601,7 @@ export default function App() {
         </Box>
 
         {/* Footer */}
-        <Box
-          id="contact" // Section ID for "Contact"
-          component="footer"
-          sx={{ mt: "auto", py: 4, bgcolor: "primary.main", color: "white" }}
-        >
-          <Container maxWidth="lg">
-            <Box
-              sx={{ display: "flex", justifyContent: "center", gap: 3, mb: 2 }}
-            >
-              <Link href="#" color="inherit" underline="hover">
-                About
-              </Link>
-              <Link href="#" color="inherit" underline="hover">
-                FAQ
-              </Link>
-              <Link href="#" color="inherit" underline="hover">
-                Contact
-              </Link>
-              <IconButton
-                aria-label="Facebook"
-                href="https://facebook.com"
-                sx={{ color: "white" }}
-              >
-                <FacebookIcon />
-              </IconButton>
-              <IconButton
-                aria-label="Twitter"
-                href="https://twitter.com"
-                sx={{ color: "white" }}
-              >
-                <TwitterIcon />
-              </IconButton>
-            </Box>
-            <Typography variant="body2" sx={{ textAlign: "center" }}>
-              DanaMitra – Empowering generosity, inspiring change. Contact us at
-              info@danamitra.com
-            </Typography>
-          </Container>
-        </Box>
+        <Footer />
 
         <Snackbar
           open={copied}

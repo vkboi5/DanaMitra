@@ -1,11 +1,15 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary"; // Import ErrorBoundary
+import { ErrorBoundary } from "react-error-boundary";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Navbar from "./pages/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Donate from "./pages/Donate";
+import About from "./pages/About";        
+import Certificates from "./pages/Certificates";  
+import Newspaper from "./pages/Newspaper";    
+import DonationPage from "./pages/DonationPage";    
 
 // Fallback component for errors
 function ErrorFallback({ error, resetErrorBoundary }) {
@@ -39,13 +43,17 @@ const AppContent = () => {
 
   return (
     <>
-      {!hideNavbar && <Navbar />} {/* Render Navbar only if not on /donate or /dashboard */}
+      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/donate" element={<Donate />} />
+        <Route path="/about" element={<About />} />           {/* New route */}
+        <Route path="/certificates" element={<Certificates />} />  {/* New route */}
+        <Route path="/newspaper" element={<Newspaper />} />    {/* New route */}
+        <Route path="/donation" element={<DonationPage />} />    {/* New route */}
       </Routes>
     </>
   );
