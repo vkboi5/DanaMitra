@@ -60,6 +60,9 @@ export default function Home() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [carouselIndexLoop, setCarouselIndexLoop] = useState(0);
   const navigate = useNavigate();
+  const text = "Think global, Act local";
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
 
   // Carousel effect
   useEffect(() => {
@@ -77,12 +80,31 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  //Typewriting animation
+  useEffect(() => {
+    let timeout;
+
+    if (index <= text.length) {
+      timeout = setTimeout(() => {
+        setDisplayedText(text.substring(0, index));
+        setIndex(index + 1);
+      }, 100);
+    } else {
+      timeout = setTimeout(() => {
+        setDisplayedText("");
+        setIndex(0);
+      }, 1500); // Pause before repeating (adjust as needed)
+    }
+
+    return () => clearTimeout(timeout);
+  }, [index, text]);
+
   const handleCloseSnackbar = () => {
     setCopied(false);
   };
 
   const handleDonateBtn = () => {
-    navigate("/donate");
+    navigate("/donation");
   };
 
   return (
@@ -161,7 +183,7 @@ export default function Home() {
                 textShadow: "2px 2px 8px rgba(0,0,0,0.5)",
               }}
             >
-              NayePankh
+              Welcome to NayePankh Foundation
             </Typography>
             <Typography
               variant="h5"
@@ -211,7 +233,7 @@ export default function Home() {
               <Grid item xs={12} md={8} order={{ xs: 1, md: 2 }}>
                 <Box
                   sx={{
-                    pl: { xs: 0, md: 4 },
+                    pl: { xs: 0, md: 25 },
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
@@ -232,14 +254,22 @@ export default function Home() {
                     variant="h6"
                     component="h3"
                     sx={{
-                      fontWeight: 500,
+                      fontWeight: 800,
                       color: "text.secondary",
                       mb: 2,
-                      fontSize: { xs: "1.5rem", md: "2rem" },
-                      fontStyle: "italic",
+                      fontSize: { xs: "2.5rem", md: "3rem" },
+                      whiteSpace: "nowrap", // Prevents wrapping
+                      overflow: "hidden", // Hides overflow
                     }}
                   >
-                    Think global, Act local.
+                    {displayedText}
+                    <span
+                      style={{
+                        display: index < text.length ? "inline-block" : "none",
+                        borderRight: "0.1em solid",
+                        animation: "blink 1s steps(2, start) infinite",
+                      }}
+                    />
                   </Typography>
                   <Typography
                     variant="body1"
@@ -295,13 +325,12 @@ export default function Home() {
             zIndex: 1,
             backgroundImage: `url(${helpBg})`,
             backgroundSize: "cover",
-            filter: "brightness(0.7)",
+            filter: "brightness(0.9)",
             backgroundPosition: "center",
             minHeight: "416px",
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "scale(1.02)",
-              filter: "brightness(1.1)", // Hover effects without blur
             },
           }}
         >
@@ -325,7 +354,7 @@ export default function Home() {
               <span style={{ color: "#FFFFFF" }}>Smile</span> on Their Faces
             </Typography>
             <Button
-              variant="contained"
+              variant="contahined"
               onClick={handleDonateBtn}
               startIcon={<VolunteerActivismOutlined />}
               sx={{

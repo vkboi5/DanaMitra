@@ -56,7 +56,7 @@ export default function Navbar() {
     { text: "About", path: "/about" },
     { text: "Certificates", path: "/certificates" },
     { text: "Newspaper", path: "/newspaper" },
-    { text: "Donate", path: "/donate" }, // Fixed path from "/donation" to match previous consistency
+    { text: "Donate", path: "/donation" }, // Fixed path from "/donation" to match previous consistency
   ];
 
   return (
@@ -160,51 +160,6 @@ export default function Navbar() {
                 {link.text}
               </Button>
             ))}
-            {isLoggedIn ? (
-              <Button
-                variant="outlined"
-                onClick={handleLogout}
-                sx={{
-                  color: "#F1C40F", // Yellow text
-                  borderColor: "#F1C40F",
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                  borderRadius: 50,
-                  py: 1,
-                  px: 3,
-                  "&:hover": {
-                    color: "#FFFFFF",
-                    bgcolor: "#F1C40F", // Yellow background on hover
-                    borderColor: "#F1C40F",
-                    transform: "scale(1.05)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Logout
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                onClick={handleLogin}
-                sx={{
-                  bgcolor: "#F1C40F", // Yellow background
-                  color: "#34495E", // Dark slate text
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                  borderRadius: 50,
-                  py: 1,
-                  px: 3,
-                  "&:hover": {
-                    bgcolor: "#F39C12", // Darker yellow on hover
-                    transform: "scale(1.05)",
-                  },
-                  transition: "all 0.3s ease",
-                }}
-              >
-                Login
-              </Button>
-            )}
           </Box>
 
           <IconButton
@@ -293,7 +248,7 @@ export default function Navbar() {
               <Button
                 variant="contained"
                 startIcon={<VolunteerActivismIcon />}
-                onClick={() => handleNavClick("/donate")}
+                onClick={() => handleNavClick("/donation")}
                 fullWidth
                 sx={{
                   m: 2,
@@ -311,51 +266,7 @@ export default function Navbar() {
                 Donate Now
               </Button>
             </ListItem>
-            <ListItem disablePadding>
-              {isLoggedIn ? (
-                <Button
-                  variant="outlined"
-                  onClick={handleLogout}
-                  fullWidth
-                  sx={{
-                    m: 2,
-                    color: "#2ECC71", // Green text
-                    borderColor: "#2ECC71",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                    borderRadius: 4,
-                    py: 1.5,
-                    "&:hover": {
-                      bgcolor: "rgba(46, 204, 113, 0.1)",
-                      borderColor: "#27AE60", // Darker green
-                    },
-                  }}
-                >
-                  Logout
-                </Button>
-              ) : (
-                <Button
-                  variant="outlined"
-                  onClick={handleLogin}
-                  fullWidth
-                  sx={{
-                    m: 2,
-                    color: "#2ECC71", // Green text
-                    borderColor: "#2ECC71",
-                    textTransform: "uppercase",
-                    fontWeight: "bold",
-                    borderRadius: 4,
-                    py: 1.5,
-                    "&:hover": {
-                      bgcolor: "rgba(46, 204, 113, 0.1)",
-                      borderColor: "#27AE60",
-                    },
-                  }}
-                >
-                  Login
-                </Button>
-              )}
-            </ListItem>
+            <ListItem disablePadding></ListItem>
           </List>
         </Box>
       </Drawer>
