@@ -174,6 +174,9 @@ function Donation() {
               </Typography>
               <Button
                 variant="contained"
+                href="https://pages.razorpay.com/pl_NUcVhpQzK8rI1b/view"
+                target="_blank"
+                rel="noopener noreferrer" // Recommended for security
                 sx={{
                   bgcolor: "#F1C40F",
                   color: "#34495E",

@@ -230,7 +230,9 @@ function Footer() {
             <Box sx={{ display: "flex", gap: { xs: 1.5, md: 2 } }}>
               <IconButton
                 aria-label="Facebook"
-                href="https://facebook.com"
+                href="https://www.facebook.com/nayepankhfoundation"
+                target="_blank" // Add this line
+                rel="noopener noreferrer" // Recommended for security
                 sx={{
                   color: "#2ECC71",
                   "&:hover": { color: "#27AE60" },
@@ -244,7 +246,9 @@ function Footer() {
               </IconButton>
               <IconButton
                 aria-label="Twitter"
-                href="https://twitter.com"
+                href="https://x.com/nayepankh"
+                target="_blank" // Add this line
+                rel="noopener noreferrer" // Recommended for security
                 sx={{
                   color: "#2ECC71",
                   "&:hover": { color: "#27AE60" },
@@ -258,7 +262,9 @@ function Footer() {
               </IconButton>
               <IconButton
                 aria-label="YouTube"
-                href="https://youtube.com"
+                href="https://www.youtube.com/@nayepankhfoundation"
+                target="_blank" // Add this line
+                rel="noopener noreferrer" // Recommended for security
                 sx={{
                   color: "#2ECC71",
                   "&:hover": { color: "#27AE60" },
@@ -272,7 +278,9 @@ function Footer() {
               </IconButton>
               <IconButton
                 aria-label="Instagram"
-                href="https://instagram.com"
+                href="https://www.instagram.com/nayepankhfoundation"
+                target="_blank" // Add this line
+                rel="noopener noreferrer" // Recommended for security
                 sx={{
                   color: "#2ECC71",
                   "&:hover": { color: "#27AE60" },
